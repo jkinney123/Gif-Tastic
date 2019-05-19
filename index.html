@@ -17,52 +17,58 @@
         <h1>Giftastic</h1>
     
         <!-- This form will be where users input animal -->
-        <form id="gif-form">
-          <label for="gif-input">Search for an animal</label>
-          <input type="text" id="animal-input"><br>
-    
-          <!-- This button will trigger our AJAX call -->
-          <input id="find-gif" type="submit" value="Gif-Search">
-        </form>
-    
-        <!-- We'll be dumping our JSON contents in here -->
-        <div id="gif-view"></div>
-    
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript">
-    
+        <div id="buttons-view"></div>
+
+    <form id="animal-form">
+      <label for="animal-input">Add an Animal!</label>
+      <input type="text" id="gif-input"><br>
+
+      <!-- Button triggers new movie to be added -->
+      <input id="add-gif" type="submit" value="Add an Animal!">
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
     
     
     
+    var animals = ['fox', 'cow', 'sheep', 'dog', 'cat', 'bird', 'lizard',    ];
   
-  $(document).ready(function(){
-    
-    var searchTerms = ['fox', 'cow', 'sheep', 'dog', 'cat', 'bird', 'lizard',    ];
-    console.log();
+    $( document ).ready(function(){
+
+     function renderButtons() {
 
 
-    var createButton = function(c){
-    var button = $('<button>');
-    button.text(c);
+        $("#buttons-view").empty();
 
-    button.click(function(){
-        console.log($(this).text());
-    });
-    
-    $('.button-container').append(button);
-    }
-   
-   var createButtonsFromArray = function(searchTerms){
-       for(i = 0; i <searchTerms.length; i++){
-        createButton(arr[i]);
+
+        for (var i = 0; i < animals.length; i++) {
+
+        var a = $("<button>");
+        a.addClass("animal-gif");
+        a.attr("data-name", animals[i]);
+        a.text(animals[i]);
+        $("#buttons-view").append(a);
+}
+}
+
+
+        $("#add-gif").on("click", function(event) {
+        event.preventDefault();
+
+        var animal = $("#gif-input").val().trim();
+        animals.push(animal);
+
+
+    renderButtons();
 
         
 
-    } }
+    } );
        
    
 
-   var gifQuery = function(term){
+    var gifQuery = function(term){
        var apikey = "";
        var queryURL = ".../search?apikey="
                      + apiKey
@@ -81,7 +87,7 @@
        });
 
    }
-   createdButtonsFromArr(searchTerms);
+   renderButtons();
     
 });
     
