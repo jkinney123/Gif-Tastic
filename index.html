@@ -1,99 +1,113 @@
-
 <html>
+
 <body>
+
     <head>
-    <meta charset="UTF-8">
-    <title>To Do App!</title>
-          
-    <style>
-      
+        <meta charset="UTF-8">
+        <title>GifTastic!</title>
+        <style type="text/css">
+            button,
+            div,
+            form,
+            input {
+                margin: 10px;
+            }
+        </style>
 
-
-    </style>
-    
     </head>
 
     <div class="container">
         <h1>Giftastic</h1>
-    
+
         <!-- This form will be where users input animal -->
         <div id="buttons-view"></div>
 
-    <form id="animal-form">
-      <label for="animal-input">Add an Animal!</label>
-      <input type="text" id="gif-input"><br>
+        <form id="animal-form">
+            <label for="animal-input">Add an Animal!</label>
+            <input type="text" id="gif-input"><br>
 
-      <!-- Button triggers new movie to be added -->
-      <input id="add-gif" type="submit" value="Add an Animal!">
-    </form>
+            <!-- Button triggers new movie to be added -->
+            <input id="add-gifBtn" type="submit" value="Add an Animal!">
+        </form>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-    
-    
-    
-    var animals = ['fox', 'cow', 'sheep', 'dog', 'cat', 'bird', 'lizard',    ];
-  
-    $( document ).ready(function(){
+        <div id="gifs-view"></div>
 
-     function renderButtons() {
-
-
-        $("#buttons-view").empty();
-
-
-        for (var i = 0; i < animals.length; i++) {
-
-        var a = $("<button>");
-        a.addClass("animal-gif");
-        a.attr("data-name", animals[i]);
-        a.text(animals[i]);
-        $("#buttons-view").append(a);
-}
-}
-
-
-        $("#add-gif").on("click", function(event) {
-        event.preventDefault();
-
-        var animal = $("#gif-input").val().trim();
-        animals.push(animal);
-
-
-    renderButtons();
-
-        
-
-    } );
-       
-   
-
-    var gifQuery = function(term){
-       var apikey = "";
-       var queryURL = ".../search?apikey="
-                     + apiKey
-                     + "&q="+term;
-
-       $.ajax({
-           method: "GET",
-           url: queryURL,
-       }).then(function(result){
-           console.log(result);
-       
-       
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
 
 
 
-       });
+            var animals = ['fox', 'cow', 'sheep', 'dog', 'cat', 'bird', 'lizard',];
+            var animalGif = "";
 
-   }
-   renderButtons();
-    
-});
-    
+            $(document).ready(function () {
 
-    </script>
+                function renderButtons() {
 
+
+                    $("#buttons-view").empty();
+
+
+                    for (var i = 0; i < animals.length; i++) {
+
+                        var a = $("<button>");
+                        a.addClass("animal-gif");
+                        a.attr("data-name", animals[i]);
+                        a.text(animals[i]);
+                        $("#buttons-view").append(a);
+                    }
+                }
+
+
+                $("#add-gifBtn").on("click", function (event) {
+                    event.preventDefault();
+
+                    var animal = $("#gif-input").val().trim();
+                    animals.push(animal);
+
+
+                    renderButtons();
+
+
+
+                });
+
+
+
+                var gifQuery = function () {
+                    var x = $(this).data("search");
+	                console.log(x);
+
+	                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + x + "&api_key=jGV5mA5pAswTRva05ZF7sp9222j0n4ma&limit=10";
+
+                    $.ajax({
+                        method: "GET",
+                        url: queryURL,
+                    }).then(function (result) {
+                        $('#gifs-view').empty();
+                        console.log(result);
+
+                        for(var i=0; i<results.length; i++) {
+                            var Gifs = $('<div>');
+                            var gifRating = $('<p>').text("Rating: " + results[i].rating);
+                            Gifs.append(gifRating);
+
+                            var gifImg = $('<img>');
+
+
+                        }
+
+
+                    });
+
+                }
+                renderButtons();
+
+            });
+
+
+        </script>
+    </div>
 </body>
 
 </html>
